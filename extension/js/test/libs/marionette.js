@@ -23,7 +23,7 @@
     }
 
 
-}(this, function(root, Backbone, _) {
+}(window, function(root, Backbone, _) {
   'use strict';
 
   // Backbone.BabySitter

@@ -1,3 +1,4 @@
+var $ = require('jquery');
 var $fixtures = $('#fixtures');
 
 var setFixtures = function () {
@@ -10,7 +11,7 @@ var clearFixtures = function () {
     $fixtures.empty();
 };
 
-var originalHash = window.location.hash;
+var originalHash = global.window.location.hash;
 
 before(function() {
             this.setFixtures = setFixtures;
@@ -27,22 +28,22 @@ beforeEach(function () {
      * which means wrapping these libs in a factory that creates a new one.
     */
 
-    delete window.patchedBackbone;
-    delete window.patchedMarionette;
-    delete window._knownTypes;
-    window.Backbone = window.BackboneFactory();
-    window.Marionette = window.MarionetteFactory(Backbone);
-    window.patchBackbone(Backbone);
-    window.patchMarionette(Backbone, Marionette);
+    delete global.patchedBackbone;
+    delete global.patchedMarionette;
+    delete global._knownTypes;
+    global.window.Backbone = global.window.BackboneFactory();
+    global.window.Marionette = global.window.MarionetteFactory(global.window.Backbone);
+    patchBackbone(global.window.Backbone);
+    global.patchMarionette(global.window.Backbone, global.window.Marionette);
 
-    window.knownTypes();
+    global.knownTypes();
 
 });
 
 afterEach(function () {
     this.sinon.restore();
     this.clearFixtures();
-    window.location.hash = originalHash;
+    global.window.location.hash = originalHash;
     Backbone.history.stop();
     Backbone.history.handlers.length = 0;
 });

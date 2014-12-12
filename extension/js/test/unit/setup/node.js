@@ -13,30 +13,22 @@ global.sinon = sinon;
 if (!global.document || !global.window) {
   var jsdom = require('jsdom').jsdom;
 
-  global.document = jsdom('<html><head><script></script></head><body><div id="fixtures" hidden></div></body></html>', null, {
+  document = global.document = jsdom('<html><head><script></script></head><body><div id="fixtures" hidden></div></body></html>', null, {
     FetchExternalResources   : ['script'],
     ProcessExternalResources : ['script'],
     MutationEvents           : '2.0',
     QuerySelector            : false
   });
 
-  global.window = document.createWindow();
+  window = global.window = document.createWindow();
   global.navigator = global.window.navigator;
-
-  global.window.Node.prototype.contains = function (node) {
-    return this.compareDocumentPosition(node) & 16;
-  };
 }
 
 
-global.$ = global.jQuery = require('jquery');
-global._ = require('underscore');
-global.Backbone = require('backbone');
+window.$ = global.$ = global.jQuery = require('../../../lib/jquery');
+_ = window._ = global._ = require('../../../lib/underscore');
+window.Backbone = global.Backbone = require('../../libs/backbone');
 global.Backbone.$ = global.$;
-global.Marionette = Backbone.Marionette = {};
-require('backbone.wreqr');
-require('backbone.babysitter');
-global.slice = Array.prototype.slice;
-Marionette.Deferred = global.Backbone.$.Deferred;
-requireHelper('core');
+window.Marionette = global.Marionette = require('../../libs/marionette');
 
+// requireHelper('core');
